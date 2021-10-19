@@ -1,0 +1,130 @@
+<!--<h2 mat-dialog-title>{{description}}</h2>-->
+<!--<mat-dialog-content [formGroup]="form">-->
+<!--  <mat-form-field class="mat-table">-->
+<!--    <input matInput placeholder="First Name" formControlName="firstName">-->
+<!--  </mat-form-field>-->
+<!--  <mat-form-field class="mat-table">-->
+<!--    <input matInput placeholder="Last Name" formControlName="lastName">-->
+<!--  </mat-form-field>-->
+<!--  <mat-form-field class="mat-table">-->
+<!--    <input matInput placeholder="Email" formControlName="email">-->
+<!--  </mat-form-field>-->
+<!--  <mat-form-field class="mat-table">-->
+<!--    <input matInput placeholder="Username" formControlName="userName">-->
+<!--  </mat-form-field>-->
+<!--  <mat-form-field class="mat-table">-->
+<!--    <mat-select placeholder="Select category"-->
+<!--                formControlName="role">-->
+<!--      <mat-option value="ROLE_MANAGER">ROLE_MANAGER</mat-option>-->
+<!--      <mat-option value="ROLE_EMPLOYEE">ROLE_EMPLOYEE</mat-option>-->
+<!--      <mat-option value="ROLE_HR">ROLE_HR</mat-option>-->
+<!--    </mat-select>-->
+<!--  </mat-form-field>-->
+
+<!--  <mat-form-field class="mat-table">-->
+<!--    <input matInput [matDatepicker]="myDatepicker" formControlName="releasedAt">-->
+<!--    <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>-->
+<!--    <mat-datepicker #myDatepicker></mat-datepicker>-->
+<!--  </mat-form-field>-->
+<!--</mat-dialog-content>-->
+
+<!--<mat-dialog-actions>-->
+<!--  <button class="mat-raised-button" (click)="close()">Close</button>-->
+<!--  <button class="mat-raised-button mat-primary" (click)="save()">Save</button>-->
+<!--</mat-dialog-actions>-->
+
+<!-- Card container that binds all togather -->
+<mat-card>
+  <!-- Title of an Card -->
+  <mat-card-title>
+    Add New Employee
+  </mat-card-title>
+  <mat-error *ngIf="isError">
+    {{error}}
+  </mat-error>
+  <!-- Actual content starts from here -->
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onFormSubmit(form.value)">
+      <table>
+        <tr>
+          <td>
+            <mat-form-field class="demo-full-width">
+              <input formControlName="firstName" [(ngModel)]="employee.firstName" matInput placeholder="First Name">
+            </mat-form-field>
+            <mat-error>
+              <span *ngIf="form.get('firstName').invalid && (form.get('firstName').dirty || form.get('firstName').touched)">Please enter First Name !!!</span>
+            </mat-error>
+          </td>
+          <td>
+            <mat-form-field class="demo-full-width">
+              <input formControlName="lastName" [(ngModel)]="employee.lastName" matInput placeholder="Last Name">
+            </mat-form-field>
+            <mat-error>
+              <span *ngIf="form.get('lastName').invalid && (form.get('lastName').dirty || form.get('lastName').touched)">Please enter Last Name !!!</span>
+            </mat-error>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <mat-form-field class="demo-full-width">
+              <input formControlName="userName" [(ngModel)]="employee.userName" matInput placeholder="Username">
+              <mat-hint>use like : atultiwari</mat-hint>
+              <mat-error>
+                <span *ngIf="form.get('userName').invalid && (form.get('userName').dirty || form.get('userName').touched)">Enter username!</span>
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <mat-form-field class="demo-full-width">
+              <input formControlName="dob" [(ngModel)]="employee.dob"  matInput [matDatepicker]="picker" placeholder="Date of birth">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-error>
+              <span *ngIf="!form.get('dob').valid && form.get('dob').touched">Please select a valid Date !!!</span>
+            </mat-error>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <mat-select placeholder="Select Role" formControlName="role" [(ngModel)]="employee.role">
+              <mat-option value="ROLE_MANAGER">ROLE_MANAGER</mat-option>
+              <mat-option value="ROLE_EMPLOYEE">ROLE_EMPLOYEE</mat-option>
+              <mat-option value="ROLE_HR">ROLE_HR</mat-option>
+            </mat-select>
+<!--            <mat-error>-->
+<!--              <span *ngIf="form.get('role').invalid && (form.get('role').dirty || form.get('role').touched)">Please select any gender !!!</span>-->
+<!--            </mat-error>-->
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <mat-form-field class="demo-full-width">
+              <input formControlName="email" [(ngModel)]="employee.emailId" matInput placeholder="Email">
+              <mat-hint>use like : demo@demo.com</mat-hint>
+              <mat-error>
+                <span *ngIf="form.get('email').invalid && (form.get('email').dirty || form.get('email').touched)">Enter proper Email !!!</span>
+              </mat-error>
+            </mat-form-field>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <mat-slide-toggle formControlName="isAccepted" (change)="onChange($event)">Accept Terms & Conditions</mat-slide-toggle>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" class="content-center">
+            <button mat-raised-button color="accent" [disabled]="!form.valid || isAccepted==0">Submit</button>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+        </tr>
+      </table>
+    </form>
+  </mat-card-content>
+</mat-card>
+
